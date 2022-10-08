@@ -22,9 +22,15 @@ namespace ConsoleApp7
         {
             Console.WriteLine($"денег: {_amountmoney}");
         }
+        public void SetName()
+        {
+            Console.WriteLine($"Введите имя");
+            string name = Console.ReadLine();
+            _name = name;
+        }
         public void GetName()// Получить имя
         {
-            bank.InformationScore();
+            Console.WriteLine($"имя владельца счёта: {_name}");
         }
         public void DeleteNumberContribution()// Удалить номер счёта
         {
@@ -32,7 +38,7 @@ namespace ConsoleApp7
         }
         public void GetContributionNumber()// Получить номер счёта
         {
-           
+            Console.WriteLine($"{_numbercontribution}");
         }
         public void GetAmounmoney()// Получить информацию о количестве денег на счёте
         {

@@ -12,7 +12,7 @@ namespace ConsoleApp7
         private decimal _moneyintheaccount;//денег на счёте
         private int _contribution;//мин взнос
         private int _about;//процент по вкладу
-        int[] score=new int[20];
+        private int[] _score=new int[20];//номер счёта
         public Bank()
         {
             _contribution = 10000;
@@ -20,25 +20,42 @@ namespace ConsoleApp7
         }
         public void OpenScore() //открыть счёт
         {
+           Human human = new Human();
+            human.SetName();
             Random ran = new Random();
-            for (int i=0; i< score.Length; i++)
+            for (int i=0; i< _score.Length; i++)
             {
-                score[i] = ran.Next(0,9);
+                _score[i] = ran.Next(0,9);
             }
-            foreach (int i in score)
+            Console.WriteLine();
+            GetScore();
+        }
+        public void GetScore()//выовд номера счёта
+        {
+            Console.Write($"Номер счёта: ");
+            foreach (int i in _score)
             {
                 Console.Write($"{i}"); //номер открытого счёта
             }
+            Console.WriteLine();
+            Console.WriteLine();
         }
         public void ReplenishScore() //пополнить счёт
         {
-
+            Console.WriteLine();
+            Console.WriteLine($"Введите сумму пополнения");
+            string moneyccount = Console.ReadLine();
+            decimal moneyintheaccount = Convert.ToDecimal(moneyccount);
+            _moneyintheaccount = _moneyintheaccount + moneyintheaccount;
         }
         public void InformationScore() //посмотреть инф о счёте
         {
-            Console.WriteLine($"номер счёта:");
-            OpenScore();
-
+            Human human = new Human();
+            human.GetName();//имя владельца счёта
+            GetScore();//номер счёта
+            Console.WriteLine($"Денег на счёте: {_moneyintheaccount}");
+            Console.WriteLine($"Процент по вкладу: {_about}");
+            
         }
         public void CloseScore() //закрыть счёт
         {
