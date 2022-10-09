@@ -1,5 +1,6 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,14 +14,23 @@ namespace ConsoleApp7
         private decimal _amountmoney;//количество денег(не в банке)
          
         Bank bank= new Bank();
+        public Human(decimal amountmoney)
+        {
+            _amountmoney = amountmoney;
+            //_amountmoney = 15000;
+           
+        }
         public Human()
         {
-            Random ran= new Random();
-            _amountmoney = ran.Next(5000, 100000);
+
         }
         public void GetMoney()
         {
             Console.WriteLine($"денег: {_amountmoney}");
+        }
+        public void SetMoney(decimal amountmoney)
+        {
+            _amountmoney=amountmoney;
         }
         public void SetName()
         {
@@ -34,15 +44,25 @@ namespace ConsoleApp7
         }
         public void DeleteNumberContribution()// Удалить номер счёта
         {
-
+           bank.DeleteNumberContribution();
         }
         public void GetContributionNumber()// Получить номер счёта
         {
             Console.WriteLine($"{_numbercontribution}");
         }
-        public void GetAmounmoney()// Получить информацию о количестве денег на счёте
+        public void Aakgh(decimal a)
         {
-
+            _amountmoney = _amountmoney + a;
+        }
+        public decimal GetAmounMoney()// Получить информацию о количестве денег с собой
+        {
+            return _amountmoney;
+        }
+        public decimal CalculationOfFunds()
+        {
+            _amountmoney = _amountmoney - bank.MinContribution();
+            Console.WriteLine($"У вас осталось: {_amountmoney}");
+            return _amountmoney;
         }
     }
 }
