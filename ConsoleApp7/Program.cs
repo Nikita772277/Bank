@@ -1,48 +1,57 @@
 ﻿using ConsoleApp7;
 using System.Security.Cryptography;
+using System.Security.Principal;
+
 void GetMenu()
 {
+    Console.WriteLine();
     Console.WriteLine($"1. Открыть счёт");
-    Console.WriteLine($"2. Удалить номер счёта");
+    Console.WriteLine($"2. Закрыть счёт");
     Console.WriteLine($"3. Посмотреть информацию о счёте");
     Console.WriteLine($"4. Сумма на счёте через год");
     Console.WriteLine($"5. Денег с собой");
     Console.WriteLine($"6. Снять деньги");
+    Console.WriteLine($"7. Пополнить банковский счёт");
+    Console.WriteLine();
 }
 void ControlMenu()
 {
-Bank bank = new Bank();
-Human human = new Human();
+    Bank bank = new Bank();
+    Human human = new Human();
     while (true)
     {
-    GetMenu();
+        GetMenu();
         Console.WriteLine();
         string n = Console.ReadLine();
         Console.WriteLine();
-        int a = int.Parse(n);
-        if (a == 1)
+        bool a = int.TryParse(n, out var s);
+        if (s == 1)
         {
-            bank.OpenScore();
+            bank.OpenScore(human);
         }
-        else if (a == 2)
+        else if (s == 2)
         {
-            human.DeleteNumberContribution();//не понемаю как удалить номер счёта
+            human.DeleteNumberContribution(human);
         }
-        else if (a == 3)
+        else if (s == 3)
         {
-            bank.InformationScore();//не выводит имя
+            bank.InformationScore(human);
         }
-        else if (a == 4)
+        else if (s == 4)
         {
-            bank.SummScore();
+            bank.SummScore(human);
         }
-        else if (a == 5)
+        else if (s == 5)
         {
-            human.GetMoney();//ошибка выводится 0
+            human.GetMoney(human);
         }
-        else if (a == 6)
+        else if (s == 6)
         {
-            bank.WithdrawMoney();
+            bank.WithdrawMoney(human);
+        }
+        else if (s == 7)
+        {
+            bank.TopUpAccount(human);
         }
         else
         {
@@ -50,24 +59,8 @@ Human human = new Human();
             Console.WriteLine($"введите команду из списка");
             Console.WriteLine();
         }
-        //switch (a)
-        //{
-        //    case 1:
-        //       // return bank.OpenScore;
-        //        break;
-        //    case 2:
 
-        //        break;
-        //    case 3:
-
-        //        break;
-        //    case 4:
-        //        break;
-
-        //}
     }
 }
-//bank.InformationScore();
-//Console.WriteLine("\t");
-//Human.GetMoney();
+
 ControlMenu();

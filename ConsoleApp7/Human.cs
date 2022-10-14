@@ -1,7 +1,8 @@
-﻿    using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,56 +13,70 @@ namespace ConsoleApp7
         private string _name;//имя
         private int _numbercontribution;//номер счёта
         private decimal _amountmoney;//количество денег(не в банке)
-         
-        Bank bank= new Bank();
-        public Human(decimal amountmoney)
-        {
-            _amountmoney = amountmoney;
-            //_amountmoney = 15000;
-           
-        }
+        private bool _checMoney = false;
+
+        Bank bank = new Bank();
         public Human()
         {
 
         }
-        public void GetMoney()
+        public void GetMoney(Human human)
         {
-            Console.WriteLine($"денег: {_amountmoney}");
+            if (_checMoney == true)
+            {
+                Console.WriteLine($"Денег: {_amountmoney}");
+                Console.WriteLine();
+            }
+            else
+            {
+                Console.WriteLine($"Сначала откройти счёт в банке");
+                Console.WriteLine();
+            }
         }
         public void SetMoney(decimal amountmoney)
         {
-            _amountmoney=amountmoney;
+            _amountmoney = amountmoney;
+            _checMoney = true;
+
         }
         public void SetName()
         {
-            Console.WriteLine($"Введите имя");
+            Console.Write($"Введите ваше имя:");
             string name = Console.ReadLine();
             _name = name;
+            Console.WriteLine();
         }
-        public void GetName()// Получить имя
+        public void GetName(Human human)// Получить имя
         {
-            Console.WriteLine($"имя владельца счёта: {_name}");
+            Console.WriteLine($"Имя владельца счёта: {_name}");
+            Console.WriteLine();
         }
-        public void DeleteNumberContribution()// Удалить номер счёта
+        public void DeleteNumberContribution(Human human)// Удалить номер счёта
         {
-           bank.DeleteNumberContribution();
+            bank.DeleteScore(human);
         }
-        public void GetContributionNumber()// Получить номер счёта
+        public void GetContributionNumber(Human human)// Получить номер счёта
         {
             Console.WriteLine($"{_numbercontribution}");
+            Console.WriteLine();
         }
-        public void Aakgh(decimal a)
+        public void WithdrawalOfMoney(decimal a, Human human)//снятие с счёта
         {
             _amountmoney = _amountmoney + a;
         }
-        public decimal GetAmounMoney()// Получить информацию о количестве денег с собой
+        public void EnteringMoney(decimal a, Human human)//внесение на счёт
+        {
+            _amountmoney -= a;
+        }
+        public decimal GetAmounMoney(Human human)// Получить информацию о количестве денег с собой
         {
             return _amountmoney;
         }
-        public decimal CalculationOfFunds()
+        public decimal CalculationOfFunds(Human human)
         {
-            _amountmoney = _amountmoney - bank.MinContribution();
+            _amountmoney = _amountmoney - bank.MinContribution(human);
             Console.WriteLine($"У вас осталось: {_amountmoney}");
+            Console.WriteLine();
             return _amountmoney;
         }
     }
